@@ -1,0 +1,19 @@
+group = 'org.gdkt'
+version = '0.1.0-alpha'
+
+tasks.register('createZip', Zip) {
+    archiveFileName = 'kodotlin.zip'
+    destinationDirectory = file("$projectDir/build/dist")
+
+    from("$projectDir/godot-plugin/build/libs") {
+        into("lib/jvm/nativehelpers")
+    }
+    from("$projectDir/godot-plugin/native/build/libs") { // This directory might be wrong. Figure that out.
+        into("lib/linux.arm64")
+    }
+    from("$projectDir/godot-api/build/libs") {
+        into("lib/jvm/api")
+    }
+    from("$projectDir/godot-plugin-config")
+}
+createZip.dependsOn(":godot-plugin:shadowJar", ":godot-api:shadowJar")
