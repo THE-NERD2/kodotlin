@@ -20,3 +20,7 @@ tasks.test {
 kotlin {
     jvmToolchain(21)
 }
+
+tasks.generateGDExtension {
+    outputs.upToDateWhen { false }
+}

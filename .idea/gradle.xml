@@ -18,8 +18,10 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/kodotlin-plugin" name="kodotlin-plugin">
+              <build path="$PROJECT_DIR$" name="kodotlin">
                 <projects>
+                  <project path="$PROJECT_DIR$" />
+                  <project path="$PROJECT_DIR$/kodotlin-library" />
                   <project path="$PROJECT_DIR$/kodotlin-plugin" />
                 </projects>
               </build>
@@ -30,6 +32,8 @@
         <option name="gradleHome" value="" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/kodotlin-library" />
             <option value="$PROJECT_DIR$/kodotlin-plugin" />
             <option value="$PROJECT_DIR$/kodotlin-test" />
           </set>
