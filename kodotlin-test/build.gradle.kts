@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("dev.the_nerd2.kodotlin:kodotlin-library:0.1.0-alpha")
 }
 
 tasks.test {

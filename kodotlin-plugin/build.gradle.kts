@@ -14,6 +14,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation(project(":kodotlin-library"))
+    implementation(kotlin("reflect"))
 }
 
 tasks.test {
