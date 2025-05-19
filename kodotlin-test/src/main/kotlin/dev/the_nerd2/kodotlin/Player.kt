@@ -4,14 +4,14 @@ package dev.the_nerd2.kodotlin
 @Suppress("unused")
 class Player {
     private var speed = 400.0
-    private var angular_speed = Math.PI
+    private var angularSpeed = Math.PI
     @OverrideGodotAPI
     fun init() {
         godot_print("Hello, world!")
     }
     @OverrideGodotAPI
     fun physics_process(delta: Double) {
-        val radians = (angular_speed * delta).toFloat()
+        val radians = (angularSpeed * delta).toFloat()
         rotate(radians)
     }
     @ImportGodotAPI

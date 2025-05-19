@@ -9,6 +9,8 @@ import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.process.ExecOperations
+import java.io.File
+import java.net.URLClassLoader
 import javax.inject.Inject
 
 @Suppress("unused")
@@ -41,7 +43,7 @@ open class GenerateGDExtension @Inject constructor(private val execOps: ExecOper
             }
             execOps.exec {
                 it.workingDir(output.absolutePath)
-                it.commandLine("cargo", "add", "godot")
+                it.commandLine("cargo", "add", "godot", "jni")
             }
             val cargoToml = output.resolve("Cargo.toml")
             val cargoTomlLines = cargoToml.readLines().toMutableList()
@@ -49,6 +51,17 @@ open class GenerateGDExtension @Inject constructor(private val execOps: ExecOper
             cargoTomlLines.add("[lib]")
             cargoTomlLines.add("crate-type = [\"cdylib\"]")
             cargoToml.writeText(cargoTomlLines.joinToString("\n"))
+        }
+        val classes = input.walk().filter { it.isFile && it.extension == "class" }.toList()
+        val classLoader = URLClassLoader(arrayOf(input.toURI().toURL()))
+        classes.forEach {
+            val clazz = classLoader.loadClass(it.absolutePath
+                .replace(input.absolutePath, "") // Remove path to input directory
+                .replace(".class", "") // Remove extension
+                .substring(1) // Remove leading path separator
+                .replace(File.separatorChar, '.') // Replace path separator
+            ).kotlin // KClass instead of Class
+            // TODO: process this class to create bindings
         }
     }
 }
